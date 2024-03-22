@@ -1,0 +1,98 @@
+imports:
+  - { resource: ../../../../src/Librarify/Shared/Infrastructure/Symfony/DependencyInjection/librarify_services.yaml }
+
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  # Configure
+  _instanceof:
+    MyLibrary\Shared\Domain\Bus\Event\DomainEventSubscriber:
+      tags: ['mylibrary.domain_event_subscriber']
+
+    MyLibrary\Shared\Domain\Bus\Command\CommandHandler:
+      tags: ['mylibrary.command_handler']
+
+    MyLibrary\Shared\Domain\Bus\Query\QueryHandler:
+      tags: ['mylibrary.query_handler']
+
+  MyLibrary\Apps\Librarify\Backend\Controller\:
+    resource: '../src/Controller'
+    tags: ['controller.service_arguments']
+
+  MyLibrary\Apps\Librarify\Backend\Command\:
+    resource: '../src/Command'
+    tags: ['console.command']
+
+  # Wire
+  MyLibrary\Shared\:
+    resource: '../../../../src/Shared'
+
+  MyLibrary\Librarify\:
+    resource: '../../../../src/Librarify'
+
+  # -- TAGGING --
+  MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
+    arguments: [!tagged mylibrary.domain_event_subscriber]
+    lazy: true
+
+  MyLibrary\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+    arguments: [!tagged mylibrary.domain_event_subscriber]
+
+  MyLibrary\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+    arguments: [!tagged mylibrary.domain_event_subscriber]
+
+  MyLibrary\Shared\Infrastructure\Doctrine\DatabaseConnections:
+    arguments: [!tagged mylibrary.database_connection]
+
+  MyLibrary\Shared\Infrastructure\Symfony\AddJsonBodyToRequestListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+  MyLibrary\Shared\Infrastructure\Symfony\ApiExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, method: onException }
+
+
+  # -- APP DEFINITIONS --
+  # Command/Query Handlers
+  MyLibrary\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+    arguments: [!tagged mylibrary.command_handler]
+
+  MyLibrary\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+    arguments: [!tagged mylibrary.query_handler]
+
+  # RabbitMQ
+  MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection:
+    arguments:
+      - host: '%env(RABBITMQ_HOST)%'
+        port: '%env(RABBITMQ_PORT)%'
+        vhost: '%env(RABBITMQ_LIBRARIFY_VHOST)%'
+        login: '%env(RABBITMQ_LOGIN)%'
+        password: '%env(RABBITMQ_PASSWORD)%'
+        read_timeout: 2
+        write_timeout: 2
+        connect_timeout: 5
+
+  MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqEventBus:
+    arguments: ['@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection', '%env(RABBITMQ_EXCHANGE)%']
+
+  MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqDomainEventsConsumer:
+    arguments:
+      - '@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection'
+      - '@MyLibrary\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer'
+      - '%env(RABBITMQ_EXCHANGE)%'
+      - '%env(RABBITMQ_MAX_RETRIES)%'
+
+  MyLibrary\Apps\Librarify\Backend\Command\DomainEvents\RabbitMq\ConfigureRabbitMqCommand:
+    arguments:
+      - '@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConfigurer'
+      - '%env(RABBITMQ_EXCHANGE)%'
+      - !tagged mylibrary.domain_event_subscriber
+
+  MyLibrary\Shared\Infrastructure\Bus\Event\WithMonitoring\WithPrometheusMonitoringEventBus:
+    arguments: ['@MyLibrary\Shared\Infrastructure\Monitoring\PrometheusMonitor', 'librarify_backend', '@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqEventBus']
+
+  # -- IMPLEMENTATIONS SELECTOR --
+  MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\WithMonitoring\WithPrometheusMonitoringEventBus'

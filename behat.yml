@@ -1,0 +1,2 @@
+imports:
+  - apps/librarify/backend/tests/librarify_backend.yml

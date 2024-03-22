@@ -1,0 +1,14 @@
+framework:
+  test: true
+
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  MyLibrary\Tests\:
+    resource: '../../../../tests'
+
+  # Instance selector
+  MyLibrary\Shared\Domain\RandomNumberGenerator: '@MyLibrary\Tests\Shared\Infrastructure\ConstantRandomNumberGenerator'
+#  MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'

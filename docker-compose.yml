@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  shared_rabbitmq:
+    container_name: librarify-php_ddd-rabbitmq
+    image: 'rabbitmq:3.10.5-management'
+    restart: unless-stopped
+    ports:
+      - "5630:5672"
+      - "8090:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=librarify
+      - RABBITMQ_DEFAULT_PASS=l1br4r1fy
+
+  shared_prometheus:
+    container_name: librarify-php_ddd-prometheus
+    image: prom/prometheus:v2.36.1
+    volumes:
+      - ./etc/prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - "9999:9090"
+
+  librarify_mysql:
+    container_name: librarify-php_ddd-mysql
+    image: mariadb:10.7.4
+    ports:
+      - "3360:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: ["CMD", "mysqladmin", "--user=root", "--password=", "--host=127.0.0.1", "ping", "--silent"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+    command: ["--default-authentication-plugin=mysql_native_password"]
+
+  librarify_backend_php:
+    container_name: librarify-php_ddd_backend-php
+    user: "${UID}:${GID}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8030:8030"
+      - "9030:9001"
+    volumes:
+      - .:/app:delegated
+    depends_on:
+      - shared_rabbitmq
+      - shared_prometheus
+      - librarify_mysql
+    command: symfony serve --dir=apps/librarify/backend/public --port=8030
