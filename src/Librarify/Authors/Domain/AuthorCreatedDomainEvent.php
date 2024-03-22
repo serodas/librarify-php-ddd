@@ -19,7 +19,7 @@ final class AuthorCreatedDomainEvent extends DomainEvent
 
     public static function eventName(): string
     {
-        return 'course.created';
+        return 'author.created';
     }
 
     public static function fromPrimitives(

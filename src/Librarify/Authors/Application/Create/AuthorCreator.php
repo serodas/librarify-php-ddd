@@ -18,9 +18,9 @@ final class AuthorCreator
 
     public function __invoke(AuthorId $id, AuthorName $name): void
     {
-        $course = Author::create($id, $name);
+        $author = Author::create($id, $name);
 
-        $this->repository->save($course);
-        $this->bus->publish(...$course->pullDomainEvents());
+        $this->repository->save($author);
+        $this->bus->publish(...$author->pullDomainEvents());
     }
 }
