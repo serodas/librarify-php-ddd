@@ -9,9 +9,9 @@ use MyLibrary\Tests\Shared\Domain\UuidMother;
 
 final class AuthorIdMother
 {
-    public static function create(string $value): AuthorId
+    public static function create(?string $value = null): AuthorId
     {
-        return new AuthorId($value);
+        return new AuthorId($value ?? UuidMother::create());
     }
 
     public static function random(): AuthorId
