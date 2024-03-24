@@ -18,7 +18,7 @@ final class MySqlDatabaseCleaner
         $tables            = $this->tables($connection);
         $truncateTablesSql = $this->truncateDatabaseSql($tables);
 
-        $connection->exec($truncateTablesSql);
+        $connection->executeStatement($truncateTablesSql);
     }
 
     private function truncateDatabaseSql(array $tables): string
@@ -35,6 +35,6 @@ final class MySqlDatabaseCleaner
 
     private function tables(Connection $connection): array
     {
-        return $connection->query('SHOW TABLES')->fetchAll();
+        return $connection->executeQuery('SHOW TABLES')->fetchAllAssociative();
     }
 }

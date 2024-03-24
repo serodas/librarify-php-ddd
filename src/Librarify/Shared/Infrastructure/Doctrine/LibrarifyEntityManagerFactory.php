@@ -6,6 +6,8 @@ namespace Mylibrary\Librarify\Shared\Infrastructure\Doctrine;
 
 use MyLibrary\Shared\Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 use Doctrine\ORM\EntityManagerInterface;
+use MyLibrary\Librarify\Shared\Infrastructure\Doctrine\DbalTypesSearcher;
+use MyLibrary\Librarify\Shared\Infrastructure\Doctrine\DoctrinePrefixesSearcher;
 
 final class LibrarifyEntityManagerFactory
 {
