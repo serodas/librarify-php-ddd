@@ -1,0 +1,4 @@
+categories_put:
+  path: /categories/{id}
+  controller: MyLibrary\Apps\Librarify\Backend\Controller\Categories\CategoriesPutController
+  methods:  [PUT]
