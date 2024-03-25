@@ -20,3 +20,8 @@ librarify_backend:
       contexts:
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
+    categories:
+      paths: [ apps/librarify/backend/tests/features/categories ]
+      contexts:
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
