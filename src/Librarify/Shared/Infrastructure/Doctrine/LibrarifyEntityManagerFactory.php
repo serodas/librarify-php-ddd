@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mylibrary\Librarify\Shared\Infrastructure\Doctrine;
+namespace MyLibrary\Librarify\Shared\Infrastructure\Doctrine;
 
 use MyLibrary\Shared\Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 use Doctrine\ORM\EntityManagerInterface;
