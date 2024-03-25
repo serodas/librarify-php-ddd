@@ -15,3 +15,8 @@ librarify_backend:
       paths: [ apps/librarify/backend/tests/features/health_check ]
       contexts:
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
+    authors:
+      paths: [ apps/librarify/backend/tests/features/authors ]
+      contexts:
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
