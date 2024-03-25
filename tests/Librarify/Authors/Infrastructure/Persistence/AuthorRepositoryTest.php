@@ -12,7 +12,7 @@ use MyLibrary\Tests\Librarify\Authors\Domain\AuthorMother;
 final class AuthorRepositoryTest extends AuthorsModuleInfrastructureTestCase
 {
     /** @test */
-    public function it_should_save_a_author(): void
+    public function it_should_save_an_author(): void
     {
         $author = AuthorMother::create();
 
