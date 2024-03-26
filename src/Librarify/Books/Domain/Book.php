@@ -34,11 +34,11 @@ final class Book extends AggregateRoot
         $authors,
         $categories
     ): self {
-        $Book = new self($id, $title, $description, $score, $authors, $categories);
+        $book = new self($id, $title, $description, $score, $authors, $categories);
 
-        $Book->record(new BookCreatedDomainEvent($id->value(), $title->value(), $description->value(), $score->value()));
+        $book->record(new BookCreatedDomainEvent($id->value(), $title->value(), $description->value(), $score->value()));
 
-        return $Book;
+        return $book;
     }
 
     public function id(): BookId
