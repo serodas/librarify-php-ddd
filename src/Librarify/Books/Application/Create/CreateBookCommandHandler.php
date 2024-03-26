@@ -7,7 +7,9 @@ namespace MyLibrary\Librarify\Books\Application\Create;
 use MyLibrary\Librarify\Books\Domain\BookDescription;
 use MyLibrary\Librarify\Books\Domain\BookScore;
 use MyLibrary\Librarify\Books\Domain\BookTitle;
+use MyLibrary\Librarify\Shared\Domain\Authors\AuthorId;
 use MyLibrary\Librarify\Shared\Domain\Books\BookId;
+use MyLibrary\Librarify\Shared\Domain\Categories\CategoryId;
 use MyLibrary\Shared\Domain\Bus\Command\CommandHandler;
 
 final class CreateBookCommandHandler implements CommandHandler
@@ -23,6 +25,9 @@ final class CreateBookCommandHandler implements CommandHandler
         $description    = new BookDescription($command->description());
         $score          = new BookScore($command->score());
 
-        $this->creator->__invoke($id, $title, $description, $score, $command->authors(), $command->categories());
+        $authors = array_map(fn (string $authorId) => new AuthorId($authorId), $command->authors());
+        $categories = array_map(fn (string $categoryId) => new CategoryId($categoryId), $command->categories());
+
+        $this->creator->__invoke($id, $title, $description, $score, $authors, $categories);
     }
 }
