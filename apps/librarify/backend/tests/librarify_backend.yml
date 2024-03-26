@@ -25,3 +25,8 @@ librarify_backend:
       contexts:
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
+    books:
+      paths: [ apps/librarify/backend/tests/features/books ]
+      contexts:
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
