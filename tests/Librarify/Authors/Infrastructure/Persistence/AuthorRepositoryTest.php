@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MyLibrary\Tests\Librarify\Authors\Infrastructure\Persistence;
 
-use MyLibrary\Librarify\Authors\Domain\AuthorRepository;
 use MyLibrary\Tests\Librarify\Authors\AuthorsModuleInfrastructureTestCase;
 use MyLibrary\Tests\Librarify\Authors\Domain\AuthorIdMother;
 use MyLibrary\Tests\Librarify\Authors\Domain\AuthorMother;
