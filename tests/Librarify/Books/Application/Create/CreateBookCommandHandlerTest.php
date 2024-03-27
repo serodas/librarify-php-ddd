@@ -18,13 +18,13 @@ final class CreateBookCommandHandlerTest extends BooksModuleUnitTestCase
     {
         parent::setUp();
 
-        $this->handler = new CreateBookCommandHandler(new BookCreator($this->repository(), $this->eventBus()));
+        $this->handler = new CreateBookCommandHandler(new BookCreator($this->repository(), $this->queryBus() ,$this->eventBus()));
     }
 
     /** @test */
     public function it_should_create_a_valid_book(): void
     {
-        $command = CreateBookCommandMother::create();
+        $command     = CreateBookCommandMother::create();
 
         $book        = BookMother::fromRequest($command);
 

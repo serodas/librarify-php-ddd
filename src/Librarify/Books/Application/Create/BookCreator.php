@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace MyLibrary\Librarify\Books\Application\Create;
 
+use MyLibrary\Librarify\Authors\Application\Find\FindAuthorQuery;
+use MyLibrary\Librarify\Authors\Domain\AuthorNotFound;
 use MyLibrary\Librarify\Books\Domain\Book;
 use MyLibrary\Librarify\Books\Domain\BookDescription;
 use MyLibrary\Librarify\Books\Domain\BookRepository;
 use MyLibrary\Librarify\Books\Domain\BookScore;
 use MyLibrary\Librarify\Books\Domain\BookTitle;
+use MyLibrary\Librarify\Shared\Domain\Authors\AuthorId;
 use MyLibrary\Librarify\Shared\Domain\Books\BookId;
 use MyLibrary\Shared\Domain\Bus\Event\EventBus;
+use MyLibrary\Shared\Domain\Bus\Query\QueryBus;
 
 final class BookCreator
 {
-    public function __construct(private readonly BookRepository $repository, private readonly EventBus $bus)
-    {
+    public function __construct(
+        private readonly BookRepository $repository,
+        private readonly QueryBus $queryBus,
+        private readonly EventBus $bus
+    ) {
     }
 
     /**
@@ -38,6 +45,7 @@ final class BookCreator
 
         foreach ($authors as $authorId) {
             if (!$book->hasAuthor($authorId)) {
+                $this->ensureAuthorExist($authorId);
                 $book->addAuthor($authorId);
             }
         }
@@ -50,5 +58,10 @@ final class BookCreator
 
         $this->repository->save($book);
         $this->bus->publish(...$book->pullDomainEvents());
+    }
+
+    private function ensureAuthorExist(AuthorId $authorId): void
+    {
+        $this->queryBus->ask(new FindAuthorQuery($authorId->value()));
     }
 }

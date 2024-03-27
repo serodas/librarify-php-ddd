@@ -15,10 +15,12 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\Matcher\MatcherAbstract;
 use Mockery\MockInterface;
+use MyLibrary\Shared\Domain\Bus\Query\QueryBus;
 
 abstract class UnitTestCase extends MockeryTestCase
 {
     private EventBus|MockInterface|null      $eventBus;
+    private QueryBus|MockInterface|null      $queryBus;
     private UuidGenerator|MockInterface|null $uuidGenerator;
 
     protected function mock(string $className): MockInterface
@@ -45,6 +47,11 @@ abstract class UnitTestCase extends MockeryTestCase
     protected function eventBus(): EventBus|MockInterface
     {
         return $this->eventBus = $this->eventBus ?? $this->mock(EventBus::class);
+    }
+
+    protected function queryBus(): QueryBus|MockInterface
+    {
+        return $this->queryBus = $this->queryBus ?? $this->mock(QueryBus::class);
     }
 
     protected function shouldGenerateUuid(string $uuid): void
