@@ -30,3 +30,4 @@ librarify_backend:
       contexts:
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApplicationFeatureContext
         - MyLibrary\Tests\Shared\Infrastructure\Behat\ApiContext
+        - MyLibrary\Tests\Shared\Infrastructure\Behat\BookContext

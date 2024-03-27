@@ -4,6 +4,10 @@ Feature: Create a new book
   I want to create a new book
 
   Scenario: A valid non existing book
+    Given there is an author with id "2493201f-195d-3b9d-b339-45a8ff81d595"
+    And there is an author with id "8847e899-f2ab-39f9-a870-7fc7ea87e829"
+    And there is an author with id "5722131a-3ba0-3f30-8d74-ba5fa08caba5"
+    And there is a category with id "4d399f26-6f4c-3efc-8953-ce2bcaf04b0f"
     Given I send a PUT request to "/books/ec811a12-6fa5-4f32-b48f-e4d3ada3708f" with body:
       """
       {
