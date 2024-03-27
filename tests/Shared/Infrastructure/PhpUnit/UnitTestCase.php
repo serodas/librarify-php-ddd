@@ -44,6 +44,15 @@ abstract class UnitTestCase extends MockeryTestCase
             ->andReturnNull();
     }
 
+    protected function shouldAsk(Query $query, Response $response = null): void
+    {
+        $this->queryBus()
+            ->shouldReceive('ask')
+            ->once()
+            ->with($this->similarTo($query))
+            ->andReturn($response);
+    }
+
     protected function eventBus(): EventBus|MockInterface
     {
         return $this->eventBus = $this->eventBus ?? $this->mock(EventBus::class);

@@ -6,9 +6,15 @@ namespace MyLibrary\Tests\Librarify\Books\Application\Create;
 
 use MyLibrary\Librarify\Books\Application\Create\BookCreator;
 use MyLibrary\Librarify\Books\Application\Create\CreateBookCommandHandler;
+use MyLibrary\Tests\Librarify\Authors\Application\Find\AuthorResponseMother;
+use MyLibrary\Tests\Librarify\Authors\Application\Find\FindAuthorQueryMother;
 use MyLibrary\Tests\Librarify\Books\BooksModuleUnitTestCase;
 use MyLibrary\Tests\Librarify\Books\Domain\BookCreatedDomainEventMother;
+use MyLibrary\Tests\Librarify\Books\Domain\BookDescriptionMother;
+use MyLibrary\Tests\Librarify\Books\Domain\BookIdMother;
 use MyLibrary\Tests\Librarify\Books\Domain\BookMother;
+use MyLibrary\Tests\Librarify\Books\Domain\BookScoreMother;
+use MyLibrary\Tests\Librarify\Books\Domain\BookTitleMother;
 
 final class CreateBookCommandHandlerTest extends BooksModuleUnitTestCase
 {
@@ -18,19 +24,28 @@ final class CreateBookCommandHandlerTest extends BooksModuleUnitTestCase
     {
         parent::setUp();
 
-        $this->handler = new CreateBookCommandHandler(new BookCreator($this->repository(), $this->queryBus() ,$this->eventBus()));
+        $this->handler = new CreateBookCommandHandler(new BookCreator($this->repository(), $this->queryBus(), $this->eventBus()));
     }
 
     /** @test */
     public function it_should_create_a_valid_book(): void
     {
-        $command     = CreateBookCommandMother::create();
+        $command            = CreateBookCommandMother::create();
+        $bookId             = BookIdMother::create($command->id());
+        $bookTitle          = BookTitleMother::create($command->title());
+        $bookDescription    = BookDescriptionMother::create($command->description());
+        $bookScore          = BookScoreMother::create($command->score());
+        $authors            = $command->authors();
+        $categories         = $command->categories();
 
-        $book        = BookMother::fromRequest($command);
+        foreach ($authors as $authorId) {
+            $this->shouldAsk(FindAuthorQueryMother::create($authorId), AuthorResponseMother::withId($authorId));
+        }
+
+        $book        = BookMother::create($bookId, $bookTitle, $bookDescription, $bookScore, $authors, $categories);
 
         $domainEvent = BookCreatedDomainEventMother::fromBook($book);
 
-        $this->shouldSearch(null);
         $this->shouldSave($book);
         $this->shouldPublishDomainEvent($domainEvent);
 
