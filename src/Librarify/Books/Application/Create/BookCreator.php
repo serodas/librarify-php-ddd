@@ -18,6 +18,10 @@ final class BookCreator
     {
     }
 
+    /**
+     * @param AuthorId[] $authors.
+     * @param CategoryId[] $categories.
+     */
     public function __invoke(
         BookId $id,
         BookTitle $title,
@@ -30,6 +34,18 @@ final class BookCreator
 
         if (null === $book) {
             $book = Book::create($id, $title, $description, $score, $authors, $categories);
+        }
+
+        foreach ($authors as $authorId) {
+            if (!$book->hasAuthor($authorId)) {
+                $book->addAuthor($authorId);
+            }
+        }
+
+        foreach ($categories as $categoryId) {
+            if (!$book->hasCategory($categoryId)) {
+                $book->addCategory($categoryId);
+            }
         }
 
         $this->repository->save($book);
