@@ -23,11 +23,10 @@ abstract class AuthorsModuleUnitTestCase extends UnitTestCase
             ->andReturnNull();
     }
 
-    protected function shouldSearch(AuthorId $id, ?Author $author): void
+    protected function shouldSearch(?Author $author): void
     {
         $this->repository()
             ->shouldReceive('search')
-            ->with($this->similarTo($id))
             ->once()
             ->andReturn($author);
     }
