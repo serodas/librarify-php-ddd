@@ -10,8 +10,6 @@ final class AuthorResponse implements Response
 {
     public function __construct(private readonly string $id, private readonly string $name)
     {
-        $this->id       = $id;
-        $this->name     = $name;
     }
 
     public function id(): string

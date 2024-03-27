@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mylibrary\Librarify\Authors\Application\Find;
+namespace MyLibrary\Librarify\Authors\Application\Find;
 
 use Mylibrary\Librarify\Authors\Domain\Author;
 
