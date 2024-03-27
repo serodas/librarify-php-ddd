@@ -37,24 +37,11 @@ final class BookCreator
         $authors,
         $categories
     ): void {
-        $book = $this->repository->search($id);
-
-        if (null === $book) {
-            $book = Book::create($id, $title, $description, $score, $authors, $categories);
-        }
-
         foreach ($authors as $authorId) {
-            if (!$book->hasAuthor($authorId)) {
-                $this->ensureAuthorExist($authorId);
-                $book->addAuthor($authorId);
-            }
+            $this->ensureAuthorExist($authorId);
         }
 
-        foreach ($categories as $categoryId) {
-            if (!$book->hasCategory($categoryId)) {
-                $book->addCategory($categoryId);
-            }
-        }
+        $book = Book::create($id, $title, $description, $score, $authors, $categories);
 
         $this->repository->save($book);
         $this->bus->publish(...$book->pullDomainEvents());
