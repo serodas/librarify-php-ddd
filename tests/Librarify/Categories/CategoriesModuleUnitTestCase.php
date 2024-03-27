@@ -14,22 +14,21 @@ abstract class CategoriesModuleUnitTestCase extends UnitTestCase
 {
     private CategoryRepository|MockInterface|null $repository;
 
-    protected function shouldSave(Category $author): void
+    protected function shouldSave(Category $category): void
     {
         $this->repository()
             ->shouldReceive('save')
-            ->with($this->similarTo($author))
+            ->with($this->similarTo($category))
             ->once()
             ->andReturnNull();
     }
 
-    protected function shouldSearch(CategoryId $id, ?Category $author): void
+    protected function shouldSearch(?Category $category): void
     {
         $this->repository()
             ->shouldReceive('search')
-            ->with($this->similarTo($id))
             ->once()
-            ->andReturn($author);
+            ->andReturn($category);
     }
 
     protected function repository(): CategoryRepository|MockInterface
