@@ -15,6 +15,8 @@ use MyLibrary\Tests\Librarify\Books\Domain\BookIdMother;
 use MyLibrary\Tests\Librarify\Books\Domain\BookMother;
 use MyLibrary\Tests\Librarify\Books\Domain\BookScoreMother;
 use MyLibrary\Tests\Librarify\Books\Domain\BookTitleMother;
+use MyLibrary\Tests\Librarify\Categories\Application\Find\CategoryResponseMother;
+use MyLibrary\Tests\Librarify\Categories\Application\Find\FindCategoryQueryMother;
 
 final class CreateBookCommandHandlerTest extends BooksModuleUnitTestCase
 {
@@ -40,6 +42,10 @@ final class CreateBookCommandHandlerTest extends BooksModuleUnitTestCase
 
         foreach ($authors as $authorId) {
             $this->shouldAsk(FindAuthorQueryMother::create($authorId), AuthorResponseMother::withId($authorId));
+        }
+
+        foreach ($categories as $categoryId) {
+            $this->shouldAsk(FindCategoryQueryMother::create($categoryId), CategoryResponseMother::withId($categoryId));
         }
 
         $book        = BookMother::create($bookId, $bookTitle, $bookDescription, $bookScore, $authors, $categories);
