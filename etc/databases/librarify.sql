@@ -28,3 +28,12 @@ CREATE TABLE `domain_events` (
   `occurred_on` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `books_counter` (
+  `id` CHAR(36) NOT NULL,
+  `total` INT NOT NULL,
+  `existing_books` JSON NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `books_counter` VALUES ("212143e1-6372-4e98-bce0-f1d20a87062f", 0, "[]");
