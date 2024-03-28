@@ -22,12 +22,12 @@ final class BookIdsType extends JsonType implements DoctrineCustomType
         return self::customTypeName();
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         return parent::convertToDatabaseValue(map(fn (BookId $id) => $id->value(), $value), $platform);
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         $scalars = parent::convertToPHPValue($value, $platform);
 
