@@ -12,7 +12,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use function Lambdish\Phunctional\each;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mylibrary:domain-events:rabbitmq:generate-supervisor-files',
+    description: 'Generate the supervisor configuration for every RabbitMQ subscriber'
+)]
 final class GenerateSupervisorRabbitMqConsumerFilesCommand extends Command
 {
     private const EVENTS_TO_PROCESS_AT_TIME           = 200;

@@ -13,7 +13,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use function Lambdish\Phunctional\pipe;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mylibrary:domain-events:mysql:consume',
+    description: 'Consume domain events from MySql'
+)]
 final class ConsumeMySqlDomainEventsCommand extends Command
 {
     protected static $defaultName = 'mylibrary:domain-events:mysql:consume';

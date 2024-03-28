@@ -12,7 +12,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use function Lambdish\Phunctional\repeat;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mylibrary:domain-events:rabbitmq:consume',
+    description: 'Consume domain events from the RabbitMQ'
+)]
 final class ConsumeRabbitMqDomainEventsCommand extends Command
 {
     protected static $defaultName = 'mylibrary:domain-events:rabbitmq:consume';

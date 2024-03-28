@@ -9,7 +9,12 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Traversable;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mylibrary:domain-events:rabbitmq:configure',
+    description: 'Configure the RabbitMQ to allow publish & consume domain events'
+)]
 final class ConfigureRabbitMqCommand extends Command
 {
     protected static $defaultName = 'mylibrary:domain-events:rabbitmq:configure';
