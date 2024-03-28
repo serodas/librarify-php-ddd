@@ -9,6 +9,10 @@ services:
   MyLibrary\Tests\:
     resource: '../../../../tests'
 
+  MyLibrary\Shared\Infrastructure\Bus\Event\MySql\MySqlDoctrineEventBus:
+    class: MyLibrary\Shared\Infrastructure\Bus\Event\MySql\MySqlDoctrineEventBus
+    public: true
+
   # Instance selector
   MyLibrary\Shared\Domain\RandomNumberGenerator: '@MyLibrary\Tests\Shared\Infrastructure\ConstantRandomNumberGenerator'
-#  MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'
+  MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'
