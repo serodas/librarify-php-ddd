@@ -1,15 +1,15 @@
 services:
   # Databases
-  # @todo this should be from backoffice, no mooc
+  # @todo this should be from backoffice, no librarify
   Doctrine\ORM\EntityManager:
-    factory: [ MyLibrary\Mooc\Shared\Infrastructure\Doctrine\MoocEntityManagerFactory, create ]
+    factory: [ MyLibrary\Librarify\Shared\Infrastructure\Doctrine\LibrarifyEntityManagerFactory, create ]
     arguments:
-      - driver: '%env(MOOC_DATABASE_DRIVER)%'
-        host: '%env(MOOC_DATABASE_HOST)%'
-        port: '%env(MOOC_DATABASE_PORT)%'
-        dbname: '%env(MOOC_DATABASE_NAME)%'
-        user: '%env(MOOC_DATABASE_USER)%'
-        password: '%env(MOOC_DATABASE_PASSWORD)%'
+      - driver: '%env(LIBRARIFY_DATABASE_DRIVER)%'
+        host: '%env(LIBRARIFY_DATABASE_HOST)%'
+        port: '%env(LIBRARIFY_DATABASE_PORT)%'
+        dbname: '%env(LIBRARIFY_DATABASE_NAME)%'
+        user: '%env(LIBRARIFY_DATABASE_USER)%'
+        password: '%env(LIBRARIFY_DATABASE_PASSWORD)%'
       - '%env(APP_ENV)%'
     tags:
       - { name: mylibrary.database_connection }

@@ -95,4 +95,4 @@ services:
 
   # -- IMPLEMENTATIONS SELECTOR --
   MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\WithMonitoring\WithPrometheusMonitoringEventBus'
-  MyLibrary\Backoffice\Books\Domain\BackofficeCourseRepository: '@MyLibrary\Backoffice\Books\Infrastructure\Persistence\ElasticsearchBackofficeCourseRepository'
+  MyLibrary\Backoffice\Books\Domain\BackofficeBookRepository: '@MyLibrary\Backoffice\Books\Infrastructure\Persistence\ElasticsearchBackofficeBookRepository'
