@@ -13,6 +13,8 @@ final class BookCreatedDomainEvent extends DomainEvent
         private readonly string $title,
         private readonly string $description,
         private readonly int $score,
+        private readonly array $authors,
+        private readonly array $categories,
         string $eventId = null,
         string $occurredOn = null
     ) {
@@ -30,7 +32,7 @@ final class BookCreatedDomainEvent extends DomainEvent
         string $eventId,
         string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, $body['title'], $body['description'], $body['score'], $eventId, $occurredOn);
+        return new self($aggregateId, $body['title'], $body['description'], $body['score'], $body['authors'], $body['categories'], $eventId, $occurredOn);
     }
 
     public function toPrimitives(): array
@@ -39,6 +41,8 @@ final class BookCreatedDomainEvent extends DomainEvent
             'title'     => $this->title,
             'description' => $this->description,
             'score' => $this->score,
+            'authors' => $this->authors,
+            'categories' => $this->categories,
         ];
     }
 
@@ -55,5 +59,15 @@ final class BookCreatedDomainEvent extends DomainEvent
     public function score(): int
     {
         return $this->score;
+    }
+
+    public function authors(): array
+    {
+        return $this->authors;
+    }
+
+    public function categories(): array
+    {
+        return $this->categories;
     }
 }

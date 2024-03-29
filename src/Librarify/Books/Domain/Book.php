@@ -36,7 +36,9 @@ final class Book extends AggregateRoot
     ): self {
         $book = new self($id, $title, $description, $score, $authors, $categories);
 
-        $book->record(new BookCreatedDomainEvent($id->value(), $title->value(), $description->value(), $score->value()));
+        $authorsList = array_map(fn (AuthorId $authorId) => $authorId->value(), $authors);
+        $categoriesList = array_map(fn (CategoryId $categoryId) => $categoryId->value(), $categories);
+        $book->record(new BookCreatedDomainEvent($id->value(), $title->value(), $description->value(), $score->value(), $authorsList, $categoriesList));
 
         return $book;
     }
