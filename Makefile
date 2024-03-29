@@ -41,6 +41,7 @@ test: composer-env-file
 	docker exec librarify-php_ddd_backend-php ./vendor/bin/phpunit --testsuite librarify
 	docker exec librarify-php_ddd_backend-php ./vendor/bin/phpunit --testsuite shared
 	docker exec librarify-php_ddd_backend-php ./vendor/bin/behat -p librarify_backend --format=progress -v
+	docker exec librarify-php_ddd-backoffice_backend-php ./vendor/bin/phpunit --testsuite backoffice
 
 .PHONY: static-analysis
 static-analysis: composer-env-file
@@ -53,6 +54,7 @@ lint:
 .PHONY: run-tests
 run-tests: composer-env-file
 	mkdir -p build/test_results/phpunit
+	./vendor/bin/phpunit --exclude-group='disabled' --log-junit build/test_results/phpunit/junit.xml --testsuite backoffice
 	./vendor/bin/phpunit --exclude-group='disabled' --log-junit build/test_results/phpunit/junit.xml --testsuite librarify
 	./vendor/bin/phpunit --exclude-group='disabled' --log-junit build/test_results/phpunit/junit.xml --testsuite shared
 	./vendor/bin/behat -p librarify_backend --format=progress -v
@@ -93,4 +95,5 @@ ping-rabbitmq:
 
 clean-cache:
 	@rm -rf apps/*/*/var
+	@docker exec librarify-php_ddd-backoffice_backend-php ./apps/backoffice/backend/bin/console cache:warmup
 	@docker exec librarify-php_ddd_backend-php ./apps/librarify/backend/bin/console cache:warmup

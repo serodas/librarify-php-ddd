@@ -59,6 +59,8 @@
       "MyLibrary\\Apps\\Librarify\\Backend\\": "apps/librarify/backend/src",
       "MyLibrary\\Apps\\Librarify\\Frontend\\": "apps/librarify/frontend/src",
 
+      "MyLibrary\\Apps\\Backoffice\\Backend\\": "apps/backoffice/backend/src",
+
       "MyLibrary\\": ["src"]
     }
   },

@@ -29,6 +29,9 @@
     </php>
 
     <testsuites>
+        <testsuite name="backoffice">
+            <directory>./tests/Backoffice</directory>
+        </testsuite>
         <testsuite name="librarify">
             <directory>./tests/Librarify</directory>
         </testsuite>

@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()->in(
     [
+        __DIR__ . '/apps/backoffice/backend/src',
         __DIR__ . '/apps/librarify/backend/src',
         __DIR__ . '/apps/librarify/frontend/src',
         __DIR__ . '/src',

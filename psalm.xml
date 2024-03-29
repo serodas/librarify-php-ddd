@@ -7,6 +7,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
+        <directory name="apps/backoffice/backend/src" />
         <directory name="apps/librarify/backend/src" />
         <directory name="apps/librarify/frontend/src" />
         <directory name="src" />

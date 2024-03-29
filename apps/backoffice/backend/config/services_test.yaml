@@ -1,0 +1,13 @@
+framework:
+  test: true
+
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  MyLibrary\Tests\:
+    resource: '../../../../tests'
+
+  # -- IMPLEMENTATIONS SELECTOR --
+  MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'

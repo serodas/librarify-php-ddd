@@ -57,3 +57,32 @@ services:
       - shared_prometheus
       - librarify_mysql
     command: symfony serve --dir=apps/librarify/backend/public --port=8030
+
+  backoffice_backend_php:
+    container_name: librarify-php_ddd-backoffice_backend-php
+    user: "${UID}:${GID}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8040:8040"
+      - "9040:9001"
+    volumes:
+      - .:/app:delegated
+    depends_on:
+      - shared_rabbitmq
+      - shared_prometheus
+      - backoffice_elasticsearch
+    command: symfony serve --dir=apps/backoffice/backend/public --port=8040
+
+  backoffice_elasticsearch:
+    container_name: librarify-php_ddd-backoffice-elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.2.3
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
