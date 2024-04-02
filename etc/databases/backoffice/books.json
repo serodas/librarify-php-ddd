@@ -1,0 +1,24 @@
+{
+    "mappings": {
+        "books": {
+            "properties": {
+                "id": {
+                    "type": "keyword",
+                    "index": true
+                },
+                "title": {
+                    "type": "text",
+                    "index": true
+                },
+                "description": {
+                    "type": "text",
+                    "index": true
+                },
+                "score": {
+                    "type": "integer",
+                    "index": true
+                }
+            }
+        }
+    }
+}
