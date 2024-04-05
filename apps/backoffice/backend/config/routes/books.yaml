@@ -1,0 +1,5 @@
+books_get:
+  path: /books
+  controller: MyLibrary\Apps\Backoffice\Backend\Controller\Books\BooksGetController
+  defaults: { auth: false }
+  methods:  [GET]
