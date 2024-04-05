@@ -32,6 +32,9 @@ services:
   MyLibrary\Librarify\:
     resource: '../../../../src/Librarify'
 
+  MyLibrary\Backoffice\Books\:
+    resource: '../../../../src/Backoffice/Books'
+
   # -- TAGGING --
   MyLibrary\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
     arguments: [!tagged mylibrary.domain_event_subscriber]
@@ -90,9 +93,19 @@ services:
       - '@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConfigurer'
       - '%env(RABBITMQ_EXCHANGE)%'
       - !tagged mylibrary.domain_event_subscriber
+  
+  MyLibrary\Shared\Infrastructure\Elasticsearch\ElasticsearchClient:
+    factory: '@MyLibrary\Shared\Infrastructure\Elasticsearch\ElasticsearchClientFactory'
+    arguments:
+      - '%env(BACKOFFICE_ELASTICSEARCH_HOST)%'
+      - '%env(BACKOFFICE_ELASTICSEARCH_INDEX_PREFIX)%'
+      - '%kernel.project_dir%/../../../etc/databases/backoffice'
+      - '%env(APP_ENV)%'
+    public: true
 
   MyLibrary\Shared\Infrastructure\Bus\Event\WithMonitoring\WithPrometheusMonitoringEventBus:
     arguments: ['@MyLibrary\Shared\Infrastructure\Monitoring\PrometheusMonitor', 'librarify_backend', '@MyLibrary\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqEventBus']
 
   # -- IMPLEMENTATIONS SELECTOR --
   MyLibrary\Shared\Domain\Bus\Event\EventBus: '@MyLibrary\Shared\Infrastructure\Bus\Event\WithMonitoring\WithPrometheusMonitoringEventBus'
+  MyLibrary\Backoffice\Books\Domain\BackofficeBookRepository: '@MyLibrary\Backoffice\Books\Infrastructure\Persistence\ElasticsearchBackofficeBookRepository'
