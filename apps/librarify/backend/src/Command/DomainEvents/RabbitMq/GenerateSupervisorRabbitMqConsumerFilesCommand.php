@@ -77,7 +77,7 @@ final class GenerateSupervisorRabbitMqConsumerFilesCommand extends Command
     private function template(): string
     {
         return <<<EOF
-            [program:mylibrarytv_{queue_name}]
+            [program:mylibrary_{queue_name}]
             command      = {path}/apps/librarify/backend/bin/console mylibrary:domain-events:rabbitmq:consume --env=prod {queue_name} {events_to_process}
             process_name = %(program_name)s_%(process_num)02d
             numprocs     = {processes}
