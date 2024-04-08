@@ -1,4 +1,5 @@
 authors_put:
   path: /authors/{id}
   controller: MyLibrary\Apps\Librarify\Backend\Controller\Authors\AuthorsPutController
+  defaults: { auth: true }
   methods:  [PUT]
