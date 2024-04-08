@@ -1,6 +1,7 @@
 imports:
   - { resource: ../../../../src/Librarify/Shared/Infrastructure/Symfony/DependencyInjection/librarify_services.yaml }
-
+parameters:
+  JWT_SECRET: '%env(JWT_SECRET)%'
 services:
   _defaults:
     autoconfigure: true
@@ -56,7 +57,10 @@ services:
   MyLibrary\Shared\Infrastructure\Symfony\ApiExceptionListener:
     tags:
       - { name: kernel.event_listener, event: kernel.exception, method: onException }
-
+  
+  MyLibrary\Shared\Infrastructure\Symfony\JwtAuthMiddleware:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
   # -- APP DEFINITIONS --
   # Command/Query Handlers
