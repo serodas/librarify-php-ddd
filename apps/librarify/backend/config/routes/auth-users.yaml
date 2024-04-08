@@ -1,0 +1,4 @@
+auth-users_post:
+  path: /login
+  controller: MyLibrary\Apps\Librarify\Backend\Controller\Auth\AuthUsersPostController
+  methods:  [POST]
