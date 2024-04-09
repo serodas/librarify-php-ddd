@@ -97,4 +97,4 @@ The [RabbitMQ Bus](src/Shared/Infrastructure/Bus/Event/RabbitMq/RabbitMqEventBus
 ![Rabbit](etc/screenshots/rabbitmq-queues.png)
 
 ### Reference
-Based on https://github.com/CodelyTV/php-ddd-example.git
+Based on course DDD in PHP by [CodelyTV](https://codely.com/)
