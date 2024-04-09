@@ -22,8 +22,9 @@
 ### 🔥 Application execution
 
 1. Install all the dependencies and bring up the project with Docker executing: `make build`
-2. Then you'll have 1 app available (1 API):
+2. Then you'll have 2 apps available (2 APIs):
    1. [Librarify Backend](apps/librarify/backend): http://localhost:8030/health-check
+   2. [Backoffice Backend](apps/backoffice/backend): http://localhost:8040/health-check
 
 ### ✅ Tests execution
 
@@ -39,10 +40,41 @@ some Symfony implementation.
 
 * [Librarify](src/Librarify): Place to look in if you wanna see some code 🙂. Library platform with books, authors, categories, and so on.
 
+* [Backoffice](src/Backoffice): Here you will find a projection of books stored in Elasticsearch.
+
 ### 🎯 Hexagonal Architecture
 
 This repository follows the Hexagonal Architecture pattern. Also, it's structured using `modules`.
-<!-- With this, we can see that the current structure of a Bounded Context is: -->
+With this, we can see that the current structure of a Bounded Context is:
+
+```scala
+$ tree -L 4 src
+
+src
+|-- Librarify // Company subdomain / Bounded Context: Features related to one of the company business lines / products
+|   `-- Books // Some Module inside the Librarify context
+|       |-- Application
+|       |   |-- Create // Inside the application layer all is structured by actions
+|       |   |   |-- BookCreator.php
+|       |   |   |-- CreateBookCommand.php
+|       |   |   `-- CreateBookCommandHandler.php
+|       |   `-- Find
+|       |-- Domain
+|       |   |-- Book.php // The Aggregate of the Module
+|       |   |-- BookCreatedDomainEvent.php // A Domain Event
+|       |   |-- BookDescription.php
+|       |   |-- BookNotFound.php
+|       |   |-- BookRepository.php // The `Interface` of the repository is inside Domain
+|       |   |-- BookScore.php
+|       |   `-- BookTitle.php
+|       `-- Infrastructure // The infrastructure of our module
+|           |-- DependencyInjection
+|           `-- Persistence
+|               `--DoctrineBookRepository.php // An implementation of the repository
+`-- Shared // Shared Kernel: Common infrastructure and domain shared between the different Bounded Contexts
+    |-- Domain
+    `-- Infrastructure
+```
 
 #### Repository pattern
 Our repositories try to be as simple as possible usually only containing 2 methods `search` and `save`.
@@ -60,6 +92,9 @@ The [Query Bus](src/Shared/Infrastructure/Bus/Query/InMemorySymfonyQueryBus.php)
 The [Event Bus](src/Shared/Infrastructure/Bus/Event/InMemory/InMemorySymfonyEventBus.php) uses the Symfony Message Bus.
 The [MySql Bus](src/Shared/Infrastructure/Bus/Event/MySql/MySqlDoctrineEventBus.php) uses a MySql+Pulling as a bus.
 The [RabbitMQ Bus](src/Shared/Infrastructure/Bus/Event/RabbitMq/RabbitMqEventBus.php) uses RabbitMQ C extension.
+
+- Rabbit Management: `:8090`
+![Rabbit](etc/screenshots/rabbitmq-queues.png)
 
 ### Reference
 Based on https://github.com/CodelyTV/php-ddd-example.git
