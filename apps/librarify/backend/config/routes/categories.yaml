@@ -1,5 +1,5 @@
 categories_put:
   path: /categories/{id}
   controller: MyLibrary\Apps\Librarify\Backend\Controller\Categories\CategoriesPutController
-  defaults: { auth: true }
-  methods:  [PUT]
+  defaults: { auth: false }
+  methods: [PUT]
