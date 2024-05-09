@@ -13,6 +13,6 @@ final class DoctrineAuthRepository extends DoctrineRepository implements AuthRep
 {
     public function search(AuthUsername $username): ?AuthUser
     {
-        return $this->repository(AuthUser::class)->findOneBy(['username.value' => $username->value()]);
+        return $this->repository(AuthUser::class)->findOneBy(['username' => $username->value() ]);
     }
 }

@@ -6,7 +6,7 @@
 
     <entity name="MyLibrary\Librarify\Auth\Domain\AuthUser" table="auth_users">
         <id name="id" type="auth_id" column="id" length="36" />
-        <field name="username" type="auth_username" column="username" />
+        <field name="username" type="username" column="username" />
 
         <embedded name="password" class="MyLibrary\Librarify\Auth\Domain\AuthPassword" use-column-prefix="false" />
     </entity>
