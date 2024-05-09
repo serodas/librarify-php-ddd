@@ -23,8 +23,8 @@ final class JwtAuthMiddleware
     {
         $shouldAuthenticate = $event->getRequest()->attributes->get('auth', false);
         if ($shouldAuthenticate) {
-            $authorizationHeader = $event->getRequest()->headers->get('Authorization');
-            $token = str_replace('Bearer ', '', $authorizationHeader);
+            $authorizationHeader = $event->getRequest()->headers->get('Authorization', '');
+            $token = str_replace('Bearer ', '', $authorizationHeader) ?: null;
             $this->hasIntroducedAuthorizationToken($token)
                 ? $this->authenticate($token, $event)
                 : $this->askForAuthorizationToken($event);
