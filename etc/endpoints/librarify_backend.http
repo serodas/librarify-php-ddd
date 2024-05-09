@@ -1,0 +1,52 @@
+# Health Check
+GET http://localhost:8030/health-check
+###
+
+# Create a new category
+PUT http://localhost:8030/categories/6539ae8b-3e76-4e2a-848f-46da240921ec
+Content-Type: application/json
+
+{
+    "name": "PHP"
+}
+
+###
+
+# Create a new author
+PUT http://localhost:8030/authors/2493201f-195d-3b9d-b339-45a8ff81d594
+Content-Type: application/json
+
+{
+    "name": "Carlos Perez Sanchez"
+}
+
+###
+
+# Create a new book
+PUT http://localhost:8030/books/54b66772-4380-44e6-9083-cd48b9e9ea99
+Content-Type: application/json
+
+{
+    "title": "PHP Microservices",
+    "description": "PHP Microservices",
+    "score": 1,
+    "authors": [
+    "2493201f-195d-3b9d-b339-45a8ff81d594"
+    ],
+    "categories": [
+    "6539ae8b-3e76-4e2a-848f-46da240921ec"
+    ]
+}
+
+###
+
+# Login
+POST http://localhost:8030/login
+Content-Type: application/json
+
+{
+    "username": "serodas",
+    "password": "gav739hBPq2vFp8Xlx1KOJdhLaa5YInM"
+}
+
+###

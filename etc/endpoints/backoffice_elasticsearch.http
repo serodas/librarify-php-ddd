@@ -1,0 +1,11 @@
+# Get Aliases
+GET http://localhost:9200/_aliases
+###
+
+# mapping of backoffice_books
+GET http://localhost:9200/backoffice_books
+###
+
+# search all books
+GET http://localhost:9200/backoffice_books/_search
+###
