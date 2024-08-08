@@ -111,3 +111,15 @@ rebuild-docker: composer-env-file
 	make deps
 	make start-docker
 	docker compose build --pull --force-rm --no-cache
+
+.PHONY: ping-mysql
+ping-mysql:
+	@docker exec librarify-php_ddd_mysql mysqladmin --user=root --password= --host "127.0.0.1" ping --silent
+
+.PHONY: ping-elasticsearch
+ping-elasticsearch:
+	@curl -I -XHEAD localhost:9200
+
+.PHONY: ping-rabbitmq
+ping-rabbitmq:
+	@docker exec librarify-php_ddd-rabbitmq rabbitmqctl ping --silent
