@@ -26,6 +26,11 @@
    1. [Librarify Backend](apps/librarify/backend): http://localhost:8030/health-check
    2. [Backoffice Backend](apps/backoffice/backend): http://localhost:8040/health-check
 
+```
+Note: If you are using Rest Client extension in VSCode, you can use the provided requests in the etc/endpoints
+folder to test the API endpoints.
+```
+
 ### ✅ Tests execution
 
 1. Install the dependencies if you haven't done it previously: `make deps`
