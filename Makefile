@@ -97,3 +97,17 @@ clean-cache:
 	@rm -rf apps/*/*/var
 	@docker exec librarify-php_ddd-backoffice_backend-php ./apps/backoffice/backend/bin/console cache:warmup
 	@docker exec librarify-php_ddd_backend-php ./apps/librarify/backend/bin/console cache:warmup
+
+# 🐳 docker compose nueva version
+start-docker: CMD=up -d
+stop-docker: CMD=stop
+destroy-docker: CMD=down
+
+start-docker stop-docker destroy-docker: create_env_file
+	UID=${shell id -u} GID=${shell id -g} docker compose $(CMD)
+
+.PHONY: rebuild-docker
+rebuild-docker: create_env_file
+	make deps
+	make start-docker
+	docker compose build --pull --force-rm --no-cache

@@ -20,7 +20,7 @@ jobs:
         run: make composer-install
 
       - name: 🐳 Start all the environment
-        run: make start
+        run: make start-docker
 
       - name: ✅ Run the tests
         run: make test
